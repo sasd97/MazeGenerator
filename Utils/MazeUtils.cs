@@ -28,6 +28,13 @@ namespace Maze.Utils
             return maze;
         }
 
+        public static CellModel GetStartCell(this CellModel[,] maze) {
+            CellModel start = maze[MazeConstants.StartPosition, MazeConstants.StartPosition];
+            start.VisitState = CellConstants.Visited;
+            start.IsStart = true;
+            return start;
+        }
+
         private static bool IsInMaze(int mazeHeight, int mazeWidth, int cellX, int cellY)
         {
             return (cellX < mazeHeight - 1 && cellY < mazeWidth - 1);

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maze.Constants;
+﻿using Maze.Constants;
 
 namespace Maze.Models
 {
@@ -18,6 +13,21 @@ namespace Maze.Models
         {
             X = x;
             Y = y;
+        }
+
+        public CellModel(int x,
+                        int y,
+                        int type,
+                        bool visited,
+                        bool isStart = false,
+                        bool isFinish = false)
+        {
+            X = x;
+            Y = y;
+            Type = type;
+            VisitState = visited ? CellConstants.Visited : CellConstants.Unknown;
+            IsStart = isStart;
+            IsFinish = isFinish;
         }
 
         public int X { get; set; }

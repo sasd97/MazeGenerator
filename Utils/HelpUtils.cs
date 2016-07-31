@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Maze.Constants;
 using Maze.Models;
 
 namespace Maze.Utils
@@ -11,7 +6,7 @@ namespace Maze.Utils
     static class HelpUtils
     {
 
-        public static void PrintMaze(CellModel[,] maze, int height, int width, Action<CellModel, bool> print)
+        public static void PrintMaze(this CellModel[,] maze, int height, int width, Action<CellModel, bool> print)
         {
             for (int i = 0; i < height; i++)
             {

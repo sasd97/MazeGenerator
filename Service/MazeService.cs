@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Maze.Constants;
 using Maze.Models;
 using Maze.Utils;
@@ -11,20 +9,25 @@ namespace Maze.Service
 {
     static class MazeService
     {
-
-        private const int Distance = 2;
-        private const int NeighbourSize = 4;
-
         private static readonly Random Random = new Random();
 
-        public static CellModel[,] GenerateMaze(CellModel[,] maze, int width, int height)
+        public static CellModel[,] GenerateMaze(CellModel[,] maze,
+                                                int width,
+                                                int height,
+                                                bool isCustomStart = false,
+                                                bool isCustomFinish = false,
+                                                int[] customStart = null,
+                                                int[] customFinish = null)
         {
             Stack<CellModel> stack = new Stack<CellModel>();
 
-            var startCell = maze[1, 1];
-            startCell.VisitState = CellConstants.Visited;
-            startCell.IsStart = true;
-            var currentCell = startCell;
+            Console.WriteLine(isCustomStart);
+            var currentCell = maze.GetStartCell();
+
+            if (isCustomStart) {
+                maze[currentCell.Y, currentCell.X].IsStart = false;
+                maze[customStart[1], customStart[0]].IsStart = true;
+            }
 
             do
             {
@@ -49,6 +52,11 @@ namespace Maze.Service
                 }
             } while (UnvisitedCount(maze) > 0);
 
+            if (isCustomFinish) {
+                maze[customFinish[1], customFinish[0]].IsFinish = true;
+                return maze;
+            }
+
             currentCell.IsFinish = true;
             return maze;
         }
@@ -58,15 +66,15 @@ namespace Maze.Service
             int x = cell.X;
             int y = cell.Y;
 
-            var up = new CellModel(x, y - Distance);
-            var rt = new CellModel(x + Distance, y);
-            var dw = new CellModel(x, y + Distance);
-            var lt = new CellModel(x - Distance, y);
+            var up = new CellModel(x, y - MazeConstants.Distance);
+            var rt = new CellModel(x + MazeConstants.Distance, y);
+            var dw = new CellModel(x, y + MazeConstants.Distance);
+            var lt = new CellModel(x - MazeConstants.Distance, y);
 
             CellModel[] directions = {dw, rt, up, lt};
-            var row = new RowModel(NeighbourSize);
+            var row = new RowModel(MazeConstants.NeighbourSize);
 
-            for (int i = 0; i < NeighbourSize; i++)
+            for (int i = 0; i < MazeConstants.NeighbourSize; i++)
             {
                 var current = directions[i];
                 if (!current.In(width, height)) continue;
