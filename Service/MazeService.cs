@@ -21,7 +21,6 @@ namespace Maze.Service
         {
             Stack<CellModel> stack = new Stack<CellModel>();
 
-            Console.WriteLine(isCustomStart);
             var currentCell = maze.GetStartCell();
 
             if (isCustomStart) {
@@ -101,6 +100,7 @@ namespace Maze.Service
             targetCell.X = src.X + addX;
             targetCell.Y = src.Y + addY;
 
+            maze[targetCell.Y, targetCell.X].Type = CellConstants.Cell;
             maze[targetCell.Y, targetCell.X].VisitState = CellConstants.Visited;
             return maze;
         }

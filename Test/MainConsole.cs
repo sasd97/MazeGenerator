@@ -26,11 +26,27 @@ namespace Maze
                     return;
                 }
                 char symb = item.Type == CellConstants.Wall ? '#' : '0';
+                //if (item.VisitState == CellConstants.Visited) symb = '1';
+                //if (item.IsStart) symb = '0';
+                //if (item.IsFinish) symb = '2';
+                Console.Write($"{symb} ");
+            });   
+
+            Console.WriteLine();
+
+            maze.PrintMaze(MazeConstants.Height, MazeConstants.Width, (item, isNewLine) =>
+            {
+                if (isNewLine)
+                {
+                    Console.WriteLine("\n");
+                    return;
+                }
+                char symb = item.Type == CellConstants.Wall ? '#' : '0';
                 if (item.VisitState == CellConstants.Visited) symb = '1';
                 if (item.IsStart) symb = '0';
                 if (item.IsFinish) symb = '2';
                 Console.Write($"{symb} ");
-            });                   
+            });                  
         }
     }
 }
